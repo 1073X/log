@@ -2,12 +2,12 @@
 
 #include <iostream>
 
-namespace miu::project {
+namespace miu::log {
 extern std::string_view version();
 extern std::string_view build_info();
-}    // namespace miu::project
+}    // namespace miu::log
 
 TEST(ut_version, version) {
-    std::cout << miu::project::version() << std::endl;
-    std::cout << miu::project::build_info() << std::endl;
+    std::cout << miu::log::version() << std::endl;
+    std::cout << miu::log::build_info() << std::endl;
 }
