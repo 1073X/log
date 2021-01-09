@@ -30,9 +30,9 @@ delivery:
         - ./build debug
         - ./build release
 
-        - mkdir -p $INC_PATH
-        - rm -fr $INC_PATH/log
-        - cp -frv ./include/log $INC_PATH
+          #- mkdir -p $INC_PATH
+          #- rm -fr $INC_PATH/log
+          #- cp -frv ./include/log $INC_PATH
 
         - mkdir -p $DBG_PATH
         - cp -fv debug/liblog.a $DBG_PATH
