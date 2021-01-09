@@ -1,5 +1,6 @@
 #pragma once
 
+#include <com/predict.hpp>
 #include <com/ring_buffer.hpp>
 
 #include "head.hpp"
@@ -17,7 +18,9 @@ class ring {
 
     template<typename... ARGS>
     auto push(severity sev, ARGS&&... args) {
-        push(head { sev }, std::forward<ARGS>(args)...);
+        auto h = head { sev };
+        auto size = _raw.capacity() - _raw.size();
+        push(size, h, std::forward<ARGS>(args)...);
     }
 
     auto pop() {
@@ -55,12 +58,16 @@ class ring {
     }
 
   private:
-    void push() { _raw.push(tail {}); }
+    void push(uint32_t size) { _raw.push(tail { size > 1 }); }
 
     template<typename T, typename... ARGS>
-    void push(T const& val, ARGS&&... args) {
-        _raw.push(val);
-        push(std::forward<ARGS>(args)...);
+    void push(uint32_t size, T const& val, ARGS&&... args) {
+        if (LIKELY(size > 1)) {
+            _raw.push(val);
+            push(--size, std::forward<ARGS>(args)...);
+        } else {
+            push(size);
+        }
     }
 
   private:

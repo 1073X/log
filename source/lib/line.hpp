@@ -13,6 +13,9 @@ class line {
         : _time(time)
         , _sev(sev) {}
 
+    auto operator!() const { return _sev == severity::MAX; }
+    operator bool() const { return !operator!(); }
+
     auto time() const { return _time; }
     auto severity() const { return _sev; }
 

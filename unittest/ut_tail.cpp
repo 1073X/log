@@ -5,10 +5,15 @@
 using miu::com::type_id;
 using miu::log::tail;
 
-TEST(ut_tail, variant) {
-    class tail tail;
-    miu::com::variant var { tail };
+TEST(ut_tail, ctor) {
+    class tail tail(true);
+    EXPECT_TRUE(tail.is_intact());
+}
 
-    EXPECT_EQ(type_id<class tail>::value, var.id());
-    EXPECT_TRUE(var.get<class tail>());
+TEST(ut_tail, variant) {
+    miu::com::variant var { tail(false) };
+
+    EXPECT_EQ(type_id<tail>::value, var.id());
+    EXPECT_TRUE(var.get<tail>());
+    EXPECT_FALSE(var.get<tail>()->is_intact());
 }

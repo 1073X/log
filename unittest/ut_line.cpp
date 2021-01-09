@@ -7,6 +7,7 @@ using miu::log::severity;
 TEST(ut_line, default) {
     miu::log::line line;
     EXPECT_EQ(severity::MAX, line.severity());
+    EXPECT_FALSE(line);
 }
 
 TEST(ut_line, construct) {
@@ -14,6 +15,7 @@ TEST(ut_line, construct) {
     miu::log::line line { time, severity::DEBUG };
     EXPECT_EQ(time, line.time());
     EXPECT_EQ(severity::DEBUG, line.severity());
+    EXPECT_TRUE(line);
 }
 
 TEST(ut_line, thread_id) {

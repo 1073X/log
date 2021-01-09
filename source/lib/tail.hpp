@@ -4,7 +4,16 @@
 
 namespace miu::log {
 
-class tail {};
+class tail {
+  public:
+    tail(bool is_intact)
+        : _is_intact { is_intact } {}
+
+    auto is_intact() const { return _is_intact; }
+
+  private:
+    bool _is_intact;
+};
 
 }    // namespace miu::log
 
