@@ -16,7 +16,10 @@ TEST_F(ut_ring, push_pop) {
     auto line1 = ring.pop();
     EXPECT_EQ(severity::INFO, line1.severity());
     EXPECT_GE(datetime::now(), line1.time());
-    EXPECT_EQ(2U, line1.size());
+    auto it1 = line1.begin();
+    EXPECT_EQ(1, (it1++)->get<int32_t>());
+    EXPECT_EQ(+"abc", (it1++)->get<const char*>());
+    EXPECT_EQ(line1.end(), it1);
 
     auto line2 = ring.pop();
     EXPECT_EQ(severity::DEBUG, line2.severity());
