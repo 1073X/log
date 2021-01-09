@@ -26,7 +26,7 @@ class ring {
 
         auto total = _raw.size();
         if (total > 1) {
-            auto idx = 0;
+            auto idx = 0U;
 
             // move to next head
             while (idx < total && _raw[idx].id() != head_id) {

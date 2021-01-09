@@ -36,4 +36,3 @@ TEST(ut_line, append) {
     EXPECT_EQ("abc", (it++)->get<const char*>());
     EXPECT_EQ(line.end(), it);
 }
-

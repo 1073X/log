@@ -4,7 +4,7 @@
 
 namespace miu::log {
 
-struct tail {};
+class tail {};
 
 }    // namespace miu::log
 

@@ -1,6 +1,6 @@
 #pragma once
-
 #include <com/variant.hpp>
+#include <vector>
 
 #include "severity.hpp"
 
