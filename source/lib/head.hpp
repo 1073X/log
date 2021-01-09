@@ -1,16 +1,20 @@
 #pragma once
 
-#include "com/datetime.hpp"
-#include "com/variant.hpp"
+#include <com/datetime.hpp>
+#include <com/variant.hpp>
+
 #include "log/severity.hpp"
 
 namespace miu::log {
 
 class head {
   public:
-    explicit head(severity sev)
-        : _time(com::datetime::now())
+    head(com::datetime time, severity sev)
+        : _time(time)
         , _sev(sev) {}
+
+    explicit head(severity sev)
+        : head(com::datetime::now(), sev) {}
 
     auto time() const { return _time; }
     auto severity() const { return _sev; }
@@ -21,3 +25,4 @@ class head {
 };
 
 }    // namespace miu::log
+
