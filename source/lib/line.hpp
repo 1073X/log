@@ -8,11 +8,13 @@ namespace miu::log {
 
 class line {
   public:
-    auto time() const { return _time; }
-    auto set_time(com::datetime v) { _time = v; }
+    line() = default;
+    line(com::datetime time, severity sev)
+        : _time(time)
+        , _sev(sev) {}
 
+    auto time() const { return _time; }
     auto severity() const { return _sev; }
-    auto set_severity(enum severity v) { _sev = v; }
 
     auto thread_id() const { return _thread_id; }
     auto set_thread_id(uint32_t v) { _thread_id = v; }

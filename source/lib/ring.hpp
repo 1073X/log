@@ -25,7 +25,6 @@ class ring {
         auto constexpr tail_id = com::type_id<class tail>::value;
 
         auto total = _raw.size();
-        class line line;
         if (total > 1) {
             auto idx = 0;
 
@@ -37,20 +36,22 @@ class ring {
             if (idx < total) {
                 // extract head
                 auto head = _raw[idx].get<class head>();
-                line.set_time(head->time());
-                line.set_severity(head->severity());
+                line l { head->time(), head->severity() };
                 idx++;
 
                 // collect items till tail
-                while (idx < total && _raw[idx].id() != tail_id) {
-                    line.append(_raw[idx]);
-                    idx++;
+                while (idx < total) {
+                    if (_raw[idx].id() != tail_id) {
+                        l.append(_raw[idx]);
+                        idx++;
+                    } else {
+                        _raw.dump(idx);
+                        return l;
+                    }
                 }
             }
-
-            _raw.dump(idx);
         }
-        return line;
+        return line {};
     }
 
   private:

@@ -4,17 +4,15 @@
 
 using miu::log::severity;
 
-TEST(ut_line, time) {
-    miu::log::line line;
-    miu::com::datetime time { 2021, 1, 9, 12, 15, 30, 123 };
-    line.set_time(time);
-    EXPECT_EQ(time, line.time());
-}
-
-TEST(ut_line, severity) {
+TEST(ut_line, default) {
     miu::log::line line;
     EXPECT_EQ(severity::MAX, line.severity());
-    line.set_severity(severity::DEBUG);
+}
+
+TEST(ut_line, construct) {
+    miu::com::datetime time { 2021, 1, 9, 12, 15, 30, 123 };
+    miu::log::line line { time, severity::DEBUG };
+    EXPECT_EQ(time, line.time());
     EXPECT_EQ(severity::DEBUG, line.severity());
 }
 
