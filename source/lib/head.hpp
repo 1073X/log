@@ -3,7 +3,7 @@
 #include <com/datetime.hpp>
 #include <com/variant.hpp>
 
-#include "log/severity.hpp"
+#include "severity.hpp"
 
 namespace miu::log {
 
