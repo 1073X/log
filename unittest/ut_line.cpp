@@ -38,3 +38,10 @@ TEST(ut_line, append) {
     EXPECT_EQ("abc", (it++)->get<const char*>());
     EXPECT_EQ(line.end(), it);
 }
+
+TEST(ut_line, intact) {
+    miu::log::line line;
+    EXPECT_FALSE(line.is_intact());
+    line.set_is_intact(true);
+    EXPECT_TRUE(line.is_intact());
+}

@@ -27,11 +27,15 @@ class line {
     auto begin() const { return _vec.begin(); }
     auto end() const { return _vec.end(); }
 
+    auto is_intact() const { return _is_intact; }
+    auto set_is_intact(bool v) { _is_intact = v; }
+
   private:
     com::datetime _time;
     enum severity _sev { severity::MAX };
     uint32_t _thread_id { -1U };
     std::vector<com::variant> _vec;
+    bool _is_intact { false };
 };
 
 }    // namespace miu::log

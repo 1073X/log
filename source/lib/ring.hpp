@@ -24,8 +24,8 @@ class ring {
     }
 
     auto pop() {
-        auto constexpr head_id = com::type_id<class head>::value;
-        auto constexpr tail_id = com::type_id<class tail>::value;
+        auto constexpr head_id = com::type_id<head>::value;
+        auto constexpr tail_id = com::type_id<tail>::value;
 
         auto total = _raw.size();
         if (total > 1) {
@@ -48,6 +48,7 @@ class ring {
                         l.append(_raw[idx]);
                         idx++;
                     } else {
+                        l.set_is_intact(_raw[idx].get<tail>()->is_intact());
                         _raw.dump(idx);
                         return l;
                     }
@@ -58,15 +59,15 @@ class ring {
     }
 
   private:
-    void push(uint32_t size) { _raw.push(tail { size > 1 }); }
+    void push(uint32_t size) { _raw.push(tail { size > 0 }); }
 
     template<typename T, typename... ARGS>
     void push(uint32_t size, T const& val, ARGS&&... args) {
         if (LIKELY(size > 1)) {
             _raw.push(val);
             push(--size, std::forward<ARGS>(args)...);
-        } else {
-            push(size);
+        } else {    // size == 1
+            push(0);
         }
     }
 
