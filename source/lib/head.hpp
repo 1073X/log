@@ -26,3 +26,4 @@ class head {
 
 }    // namespace miu::log
 
+DEF_VARIANT(miu::log::head, CUSTOM_TYPE_ID + 1);
