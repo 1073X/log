@@ -15,6 +15,7 @@ class ring {
     explicit ring(uint32_t capacity)
         : _raw { capacity } {}
 
+    auto capacity() const { return _raw.capacity(); }
     auto size() const { return _raw.size(); }
 
     template<typename... ARGS>
