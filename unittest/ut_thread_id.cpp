@@ -9,7 +9,7 @@
 
 using miu::log::thread_id;
 
-TEST(ut_thread_id, max) { EXPECT_EQ(7, thread_id::max()); }
+TEST(ut_thread_id, max) { EXPECT_EQ(15, thread_id::max()); }
 
 TEST(ut_thread_id, get) {
     EXPECT_EQ(0U, thread_id::get());
