@@ -1,9 +1,6 @@
 #include <gtest/gtest.h>
 
-#include <com/variant.hpp>
-
 #include "source/lib/head.hpp"
-#include "source/lib/variant.hpp"
 
 using miu::com::datetime;
 using miu::log::severity;
