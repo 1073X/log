@@ -26,4 +26,16 @@ class head {
 
 }    // namespace miu::log
 
+namespace miu::com {
+template<>
+struct strcat::cast<log::head> {
+    auto operator()(log::head const& head) {
+        std::ostringstream ss;
+        ss << '[' << std::to_string(head.time()) << ' ' << std::to_string(head.severity())[0]
+           << ']';
+        return ss.str();
+    }
+};
+}    // namespace miu::com
+
 DEF_VARIANT(miu::log::head, CUSTOM_TYPE_ID + 1);

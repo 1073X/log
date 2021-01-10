@@ -1,7 +1,8 @@
 #include "head.hpp"
 
+#include <com/strcat.hpp>
 #include <com/variant.hpp>
-#include <iostream>
+#include <sstream>
 
 namespace miu::com {
 
@@ -24,3 +25,4 @@ variant::get<head>() const {
 }
 
 }    // namespace miu::com
+
