@@ -25,4 +25,3 @@ variant::get<head>() const {
 }
 
 }    // namespace miu::com
-
