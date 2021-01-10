@@ -1,6 +1,6 @@
 #pragma once
 
-#include <vector>
+#include <array>
 
 #include "ring.hpp"
 #include "thread_id.hpp"
@@ -10,7 +10,7 @@ namespace miu::log {
 class rings {
   public:
     rings(uint32_t capacity)
-        : _vec(thread_id::max(), nullptr) {
+        : _vec { nullptr } {
         _vec[thread_id::get()] = new ring { capacity };
     }
 
@@ -30,7 +30,7 @@ class rings {
     }
 
   private:
-    std::vector<ring*> _vec;
+    std::array<ring*, thread_id::max()> _vec;
 };
 
 }    // namespace miu::log

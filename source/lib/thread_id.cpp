@@ -10,11 +10,6 @@ namespace miu::log {
 static std::atomic<uint16_t> g_mask { 0 };
 thread_local int32_t g_id { -1 };
 
-constexpr int32_t
-thread_id::max() {
-    return 15;
-}
-
 int32_t
 thread_id::get() {
     if (UNLIKELY(g_id < 0)) {
