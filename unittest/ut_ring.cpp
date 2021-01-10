@@ -43,6 +43,9 @@ TEST_F(ut_ring, overflow) {
     EXPECT_TRUE(ring.pop());
     EXPECT_TRUE(ring.pop());
 
+    // should be able to push more
+    ring.push(severity::DEBUG, 6);
+
     auto line = ring.pop();
     ASSERT_TRUE(line);
     EXPECT_FALSE(line.is_intact());
@@ -55,4 +58,11 @@ TEST_F(ut_ring, overflow) {
     EXPECT_EQ(4, (it++)->get<int32_t>());
     EXPECT_EQ(5, (it++)->get<int32_t>());
     EXPECT_EQ(line.end(), it);
+
+    auto line2 = ring.pop();
+    ASSERT_TRUE(line2);
+    EXPECT_TRUE(line2.is_intact());
+    EXPECT_EQ(6, line2.begin()->get<int32_t>());
+
+    EXPECT_FALSE(ring.pop());
 }

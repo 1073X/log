@@ -2,6 +2,7 @@
 
 #include <com/predict.hpp>
 #include <com/ring_buffer.hpp>
+#include <com/system_warn.hpp>
 
 #include "head.hpp"
 #include "line.hpp"
@@ -49,7 +50,7 @@ class ring {
                         idx++;
                     } else {
                         l.set_is_intact(_raw[idx].get<tail>()->is_intact());
-                        _raw.dump(idx);
+                        _raw.dump(idx + 1);
                         return l;
                     }
                 }
@@ -59,15 +60,21 @@ class ring {
     }
 
   private:
-    void push(uint32_t size) { _raw.push(tail { size > 0 }); }
+    void push(uint32_t size) {
+        assert(_raw.capacity() - _raw.size() > 0 && "no more space");
+        _raw.push(tail { size > 0 });
+    }
 
     template<typename T, typename... ARGS>
     void push(uint32_t size, T const& val, ARGS&&... args) {
         if (LIKELY(size > 1)) {
             _raw.push(val);
             push(--size, std::forward<ARGS>(args)...);
-        } else {    // size == 1
-            push(0);
+        } else {
+            if (size == 1) {
+                push(0);
+            }
+            SYSTEM_WARN("LOG_OVERFLOW -", val, std::forward<ARGS>(args)...);
         }
     }
 
