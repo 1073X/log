@@ -39,6 +39,9 @@ TEST_F(ut_ring, overflow) {
     ring.push(severity::WARN, 0, 1, 2, 3, 4, 5);
     ring.push(severity::ERROR, 0, 1, 2, 3, 4, 5, +"overflow");
 
+    // system warn
+    ring.push(severity::INFO, 6);
+
     EXPECT_TRUE(ring.pop());
     EXPECT_TRUE(ring.pop());
     EXPECT_TRUE(ring.pop());
