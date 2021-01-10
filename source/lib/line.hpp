@@ -39,3 +39,7 @@ class line {
 };
 
 }    // namespace miu::log
+
+namespace std {
+std::string to_string(miu::log::line const&);
+}

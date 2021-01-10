@@ -37,3 +37,10 @@ TEST_F(ut_rings, get) {
 
     cv.notify_all();
 }
+
+TEST_F(ut_rings, get_by_id) {
+    EXPECT_EQ(thread_id::max(), rings.capacity());
+
+    EXPECT_EQ(rings.get(), rings[0]);
+    EXPECT_EQ(nullptr, rings[1]);
+}
