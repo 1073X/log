@@ -9,6 +9,8 @@ namespace miu::log {
 backend::backend(rings* rings)
     : _rings { rings } {}
 
+backend::~backend() {}
+
 void
 backend::watch(observer* ob) {
     _obs.push_back(ob);

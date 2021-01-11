@@ -12,23 +12,13 @@ log::instance() {
 }
 
 log::log()
-    : _impl { new impl() } {}
+    : _impl { new class impl() } {}
 
 log::~log() { delete _impl; }
 
 frontend*
 log::front() {
     return _impl->front();
-}
-
-void
-log::set_severity(severity sev) {
-    front()->set_severity(sev);
-}
-
-void
-log::dump() {
-    _impl->back()->dump();
 }
 
 }    // namespace miu::log

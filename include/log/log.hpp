@@ -12,21 +12,19 @@ class log final {
 
     ~log();
 
-    void set_severity(severity);
+    auto impl() { return _impl; }
 
     template<typename... ARGS>
     auto print(ARGS&&... args) {
         front()->print(std::forward<ARGS>(args)...);
     }
 
-    void dump();
-
   private:
     log();
     frontend* front();
 
   private:
-    impl* _impl;
+    class impl* _impl;
 };
 
 template<typename... ARGS>

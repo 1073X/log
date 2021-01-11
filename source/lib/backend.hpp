@@ -8,6 +8,7 @@ namespace miu::log {
 class backend {
   public:
     backend(rings*);
+    ~backend();
 
     void watch(observer*);
     void dump();
