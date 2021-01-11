@@ -1,6 +1,7 @@
 #include <gtest/gtest.h>
 
-#include "source/lib/frontend.hpp"
+#include "log/frontend.hpp"
+#include "source/lib/rings.hpp"
 
 using miu::log::severity;
 

@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "source/lib/head.hpp"
+#include "log/head.hpp"
 
 using miu::com::datetime;
 using miu::log::severity;

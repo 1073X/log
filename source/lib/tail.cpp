@@ -1,5 +1,12 @@
 
-#include "tail.hpp"
+#include "log/tail.hpp"
+
+namespace miu::log {
+
+tail::tail(bool is_intact)
+    : _is_intact { is_intact } {}
+
+}    // namespace miu::log
 
 namespace miu::com {
 

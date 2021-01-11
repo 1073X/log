@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "source/lib/ring.hpp"
+#include "log/ring.hpp"
 
 using miu::com::datetime;
 using miu::log::severity;

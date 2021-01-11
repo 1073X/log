@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "source/lib/tail.hpp"
+#include "log/tail.hpp"
 
 using miu::com::type_id;
 using miu::log::tail;
