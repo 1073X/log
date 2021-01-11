@@ -14,7 +14,8 @@ struct ut_backend : public testing::Test {
         MOCK_METHOD(void, write, (line const&));
     };
 
-    miu::log::backend backend { 512 };
+    miu::log::rings rings { 512 };
+    miu::log::backend backend { &rings };
 };
 
 MATCHER_P2(CheckLine, thread_id, severity, "") {
@@ -39,10 +40,10 @@ TEST_F(ut_backend, dump) {
     backend.watch(&ob1);
     backend.watch(&ob2);
 
-    backend.push(severity::ERROR, 1);
+    rings.get()->push(severity::ERROR, 1);
 
     std::thread([&]() {
-        backend.push(severity::WARN, 2);
+        rings.get()->push(severity::WARN, 2);
         cv1.notify();
         cv1.wait();
         miu::log::thread_id::reset();
@@ -50,14 +51,14 @@ TEST_F(ut_backend, dump) {
     cv1.wait();
 
     std::thread([&]() {
-        backend.push(severity::INFO, 3);
+        rings.get()->push(severity::INFO, 3);
         cv2.notify();
         cv2.wait();
         miu::log::thread_id::reset();
     }).detach();
     cv2.wait();
 
-    backend.push(severity::DEBUG, 4);
+    rings.get()->push(severity::DEBUG, 4);
 
     {
         testing::InSequence seq;
@@ -77,8 +78,8 @@ TEST_F(ut_backend, dump) {
 }
 
 TEST_F(ut_backend, no_observer) {
-    backend.push(severity::DEBUG, +"debug");
-    backend.push(severity::ERROR, +"error");
+    rings.get()->push(severity::DEBUG, +"debug");
+    rings.get()->push(severity::ERROR, +"error");
     backend.dump();
 
     miu::log::thread_id::reset();
