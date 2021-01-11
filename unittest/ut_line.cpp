@@ -1,6 +1,6 @@
 #include <gtest/gtest.h>
 
-#include "source/lib/line.hpp"
+#include "log/line.hpp"
 
 using miu::log::severity;
 

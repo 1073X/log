@@ -6,8 +6,7 @@ namespace miu::log {
 
 class tail {
   public:
-    tail(bool is_intact)
-        : _is_intact { is_intact } {}
+    tail(bool is_intact);
 
     auto is_intact() const { return _is_intact; }
 
