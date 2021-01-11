@@ -9,7 +9,10 @@ TEST(ut_log, log) {
     auto log = miu::log::log::instance();
 
     log->set_severity(miu::log::severity::DEBUG);
-    log->print(miu::log::severity::DEBUG, 1, 2, 3);
+    miu::log::debug(1, 2, 3);
+    miu::log::info(1, 2, 3);
+    miu::log::warn(1, 2, 3);
+    miu::log::error(1, 2, 3);
     log->dump();
 
     miu::log::thread_id::reset();
