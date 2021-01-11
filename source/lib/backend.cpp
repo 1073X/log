@@ -4,16 +4,19 @@
 
 #include <list>
 
+#include "log_term.hpp"
+
 namespace miu::log {
 
-backend::backend(rings* rings)
-    : _rings { rings } {}
+log_term g_default_observer;
 
-backend::~backend() {}
+backend::backend(rings* rings)
+    : _rings { rings }
+    , _observer { &g_default_observer } {}
 
 void
 backend::watch(observer* ob) {
-    _obs.push_back(ob);
+    _observer = ob;
 }
 
 void
@@ -29,17 +32,8 @@ backend::dump() {
     }
 
     lines.sort([](auto lhs, auto rhs) { return lhs.time() < rhs.time(); });
-
-    if (!_obs.empty()) {
-        for (auto ob : _obs) {
-            for (const auto& line : lines) {
-                ob->write(line);
-            }
-        }
-    } else {
-        for (const auto& line : lines) {
-            std::cout << std::to_string(line) << std::endl;
-        }
+    for (const auto& line : lines) {
+        _observer->write(line);
     }
 }
 

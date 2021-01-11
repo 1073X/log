@@ -8,13 +8,12 @@ namespace miu::log {
 class backend {
   public:
     backend(rings*);
-    ~backend();
 
     void watch(observer*);
     void dump();
 
   private:
-    std::vector<observer*> _obs;
+    observer* _observer { nullptr };
     rings* _rings;
 };
 

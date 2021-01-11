@@ -35,10 +35,8 @@ TEST_F(ut_backend, dump) {
         std::condition_variable val;
     } cv1, cv2;
 
-    mock ob1;
-    mock ob2;
-    backend.watch(&ob1);
-    backend.watch(&ob2);
+    mock ob;
+    backend.watch(&ob);
 
     rings.get()->push(severity::ERROR, 1);
 
@@ -62,13 +60,12 @@ TEST_F(ut_backend, dump) {
 
     {
         testing::InSequence seq;
-        EXPECT_CALL(ob1, write(CheckLine(0U, severity::ERROR)));
-        EXPECT_CALL(ob1, write(CheckLine(1U, severity::WARN)));
-        EXPECT_CALL(ob1, write(CheckLine(2U, severity::INFO)));
-        EXPECT_CALL(ob1, write(CheckLine(0U, severity::DEBUG)));
+        EXPECT_CALL(ob, write(CheckLine(0U, severity::ERROR)));
+        EXPECT_CALL(ob, write(CheckLine(1U, severity::WARN)));
+        EXPECT_CALL(ob, write(CheckLine(2U, severity::INFO)));
+        EXPECT_CALL(ob, write(CheckLine(0U, severity::DEBUG)));
     }
 
-    EXPECT_CALL(ob2, write(testing::_)).Times(4);
     backend.dump();
 
     cv1.notify();
