@@ -1,8 +1,14 @@
 #include <gtest/gtest.h>
 
+#include <com/datetime.hpp>
+
+#include "log/line.hpp"
+#include "log/severity.hpp"
 #include "source/lib/log_file.hpp"
 
 using miu::com::date;
+using miu::com::datetime;
+using miu::log::severity;
 
 struct ut_log_file : public testing::Test {
     void TearDown() override { std::filesystem::remove(file.pathname()); }
@@ -16,4 +22,10 @@ TEST_F(ut_log_file, init_file) {
     EXPECT_EQ(pathname, file.pathname());
 
     EXPECT_TRUE(std::filesystem::exists(pathname));
+
+    std::ifstream fs { pathname };
+    std::string title;
+    std::getline(fs, title);
+    std::cout << title << std::endl;
 }
+

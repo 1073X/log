@@ -4,6 +4,8 @@
 #include <filesystem>
 #include <fstream>
 
+#include "log/line.hpp"
+
 #include "observer.hpp"
 
 namespace miu::log {
@@ -23,11 +25,17 @@ class log_file : public observer {
   public:
     log_file(std::string_view path, std::string_view name, com::date date)
         : _pathname(make_pathname(path, name, date))
-        , _ss(_pathname, std::ios_base::out | std::ios_base::app) {}
+        , _ss(_pathname, std::ios_base::out | std::ios_base::app) {
+        line l { com::datetime::now(), severity::INFO };
+        l.set_thread_id(0);
+        l.append(+"---------------- started ----------------");
+        l.set_is_intact(true);
+        write(l);
+    }
 
     auto pathname() const { return _pathname; }
 
-    void write(line const& l) override {}
+    void write(line const& l) override { _ss << std::to_string(l) << std::endl; }
 
   private:
     std::filesystem::path _pathname;
