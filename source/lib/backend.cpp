@@ -11,8 +11,8 @@ namespace miu::log {
 log_term g_default_observer;
 
 backend::backend(rings* rings)
-    : _rings { rings }
-    , _observer { &g_default_observer } {}
+    : _observer { &g_default_observer }
+    , _rings { rings } {}
 
 void
 backend::watch(observer* ob) {
