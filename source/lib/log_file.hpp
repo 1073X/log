@@ -16,6 +16,7 @@ class log_file : public observer {
             filename, sizeof(filename), "%s_%s.log", name.data(), std::to_string(date).c_str());
 
         auto pathname = std::filesystem::path { path };
+        std::filesystem::create_directories(pathname);
         return pathname / filename;
     }
 
@@ -25,6 +26,7 @@ class log_file : public observer {
         , _ss(_pathname, std::ios_base::out | std::ios_base::app) {}
 
     auto pathname() const { return _pathname; }
+
     void write(line const& l) override {}
 
   private:
