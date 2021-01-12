@@ -7,8 +7,6 @@
 #include "source/lib/log_file.hpp"
 
 using miu::com::date;
-using miu::com::datetime;
-using miu::log::severity;
 
 struct ut_log_file : public testing::Test {
     void TearDown() override { std::filesystem::remove(file.pathname()); }
@@ -28,4 +26,3 @@ TEST_F(ut_log_file, init_file) {
     std::getline(fs, title);
     std::cout << title << std::endl;
 }
-

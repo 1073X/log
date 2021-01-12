@@ -20,7 +20,7 @@ thread_id::get() {
             }
         }
 
-        FATAL_ERROR("too many threads");
+        FATAL_ERROR<std::overflow_error>("too many threads");
     }
 
     return g_id;
