@@ -16,6 +16,16 @@ log::log()
 
 log::~log() { delete _impl; }
 
+void
+log::reset(severity sev, uint32_t cap) {
+    _impl->reset<log_term>(sev, cap);
+}
+
+void
+log::dump() {
+    _impl->dump();
+}
+
 frontend*
 log::front() {
     return _impl->front();

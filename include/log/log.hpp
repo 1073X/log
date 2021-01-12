@@ -14,10 +14,14 @@ class log final {
 
     auto impl() { return _impl; }
 
+    void reset(severity, uint32_t cap);    // terminal
+
     template<typename... ARGS>
     auto print(ARGS&&... args) {
         front()->print(std::forward<ARGS>(args)...);
     }
+
+    void dump();
 
   private:
     log();

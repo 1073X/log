@@ -12,26 +12,29 @@ namespace miu::log {
 class impl {
   public:
     impl()
-        : _observer { new log_term }
-        , _rings { 512 }
+        : _rings { 512 }
         , _frontend { &_rings }
-        , _backend { &_rings, _observer.get() } {}
-
-    template<typename T, typename... ARGS>
-    void watch(ARGS&&... args) {
-        // TBD: not thread safe
-        _observer.reset(new T { std::forward<ARGS>(args)... });
-        _backend.watch(_observer.get());
-    }
+        , _backend { &_rings }
+        , _ob { new log_term } {}
 
     auto front() { return &_frontend; }
-    auto back() { return &_backend; }
+
+    template<typename T, typename... ARGS>
+    void reset(severity sev, uint32_t cap, ARGS&&... args) {
+        // TBD: not thread safe
+        _rings.resize(cap);
+        _frontend.set_severity(sev);
+        _ob.reset(new T { std::forward<ARGS>(args)... });
+    }
+
+    void dump() { _backend.dump(_ob.get()); }
 
   private:
-    std::unique_ptr<observer> _observer;
     rings _rings;
     frontend _frontend;
     backend _backend;
+
+    std::unique_ptr<observer> _ob;
 };
 
 }    // namespace miu::log

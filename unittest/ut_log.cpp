@@ -8,29 +8,15 @@
 #include "source/lib/observer.hpp"
 #include "source/lib/thread_id.hpp"
 
-using miu::log::line;
+using miu::log::severity;
 
-std::vector<line> g_lines;
-class mock_observer : public miu::log::observer {
-  public:
-    mock_observer() { g_lines.clear(); }
-
-  private:
-    void write(line const& l) override { g_lines.push_back(l); }
-};
-
-TEST(ut_log, log) {
-    auto log = miu::log::log::instance();
-
-    log->impl()->watch<mock_observer>();
-    log->impl()->front()->set_severity(miu::log::severity::DEBUG);
+TEST(ut_log, terminal) {
+    miu::log::log::instance()->reset(severity::DEBUG, 1024);
     miu::log::debug(1, 2, 3);
     miu::log::info(1, 2, 3);
     miu::log::warn(1, 2, 3);
     miu::log::error(1, 2, 3);
-    log->impl()->back()->dump();
-
-    EXPECT_EQ(4U, g_lines.size());
+    miu::log::log::instance()->dump();
 
     miu::log::thread_id::reset();
 }

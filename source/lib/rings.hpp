@@ -13,6 +13,8 @@ class rings {
     explicit rings(uint32_t capacity);
     ~rings();
 
+    void resize(uint32_t);
+
     auto capacity() const { return _vec.size(); }
     auto operator[](uint32_t i) { return _vec[i]; }
 

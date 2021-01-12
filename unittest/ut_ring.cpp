@@ -69,3 +69,8 @@ TEST_F(ut_ring, overflow) {
 
     EXPECT_FALSE(ring.pop());
 }
+
+TEST_F(ut_ring, resize) {
+    ring.resize(128);
+    EXPECT_EQ(128U, ring.capacity());
+}
