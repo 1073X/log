@@ -3,6 +3,7 @@
 
 #include "impl.hpp"
 #include "log_file.hpp"
+#include "log_syslog.hpp"
 
 namespace miu::log {
 
@@ -25,6 +26,11 @@ log::reset(severity sev, uint32_t cap) {
 void
 log::reset(severity sev, uint32_t cap, std::string_view path, std::string_view name) {
     _impl->reset<log_file>(sev, cap, path, name, com::date::today());
+}
+
+void
+log::reset(severity sev, uint32_t cap, std::string_view name) {
+    _impl->reset<log_syslog>(sev, cap, name);
 }
 
 void
