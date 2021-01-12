@@ -12,10 +12,10 @@ using miu::log::severity;
 struct ut_backend : public testing::Test {
     struct mock : public miu::log::observer {
         MOCK_METHOD(void, write, (line const&));
-    };
+    } ob;
 
     miu::log::rings rings { 512 };
-    miu::log::backend backend { &rings };
+    miu::log::backend backend { &rings, &ob };
 };
 
 MATCHER_P2(CheckLine, thread_id, severity, "") {
@@ -34,9 +34,6 @@ TEST_F(ut_backend, dump) {
         std::mutex mtx;
         std::condition_variable val;
     } cv1, cv2;
-
-    mock ob;
-    backend.watch(&ob);
 
     rings.get()->push(severity::ERROR, 1);
 
@@ -74,9 +71,15 @@ TEST_F(ut_backend, dump) {
     miu::log::thread_id::reset();
 }
 
-TEST_F(ut_backend, no_observer) {
+TEST_F(ut_backend, replace_observer) {
+    mock ob2;
+    backend.watch(&ob2);
+
     rings.get()->push(severity::DEBUG, +"debug");
     rings.get()->push(severity::ERROR, +"error");
+
+    EXPECT_CALL(ob, write(testing::_)).Times(0);
+    EXPECT_CALL(ob2, write(testing::_)).Times(2);
     backend.dump();
 
     miu::log::thread_id::reset();

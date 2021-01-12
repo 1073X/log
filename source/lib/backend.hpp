@@ -7,14 +7,14 @@ namespace miu::log {
 
 class backend {
   public:
-    backend(rings*);
+    backend(rings*, observer*);
 
     void watch(observer*);
     void dump();
 
   private:
-    observer* _observer { nullptr };
     rings* _rings;
+    observer* _observer { nullptr };
 };
 
 }    // namespace miu::log
