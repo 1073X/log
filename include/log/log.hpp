@@ -17,6 +17,7 @@ class log final {
     frontend* front();
     void reset(severity, uint32_t cap);                                                  // terminal
     void reset(severity, uint32_t cap, std::string_view path, std::string_view name);    // file
+    void reset(severity, uint32_t cap, std::string_view name);                           // syslog
     void dump();
 
   private:

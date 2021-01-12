@@ -31,3 +31,14 @@ TEST(ut_log, file) {
 
     miu::log::thread_id::reset();
 }
+
+TEST(ut_log, syslog) {
+    miu::log::log::instance()->reset(severity::DEBUG, 1024, "ut_log");
+    miu::log::debug(1, 2, 3);
+    miu::log::info(1, 2, 3);
+    miu::log::warn(1, 2, 3);
+    miu::log::error(1, 2, 3);
+    miu::log::log::instance()->dump();
+
+    miu::log::thread_id::reset();
+}
