@@ -2,6 +2,8 @@
 
 #include <syslog.h>
 
+#include <string_view>
+
 #include "observer.hpp"
 
 namespace miu::log {
@@ -14,7 +16,7 @@ class log_syslog : public observer {
         ::openlog(name.data(), option, facility);
     }
 
-    ~log_syslog() { closelog(); }
+    ~log_syslog() override { closelog(); }
 
   private:
     void write(line const& l) override {

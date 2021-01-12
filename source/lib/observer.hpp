@@ -1,8 +1,8 @@
 #pragma once
 
-namespace miu::log {
+#include "log/line.hpp"
 
-class line;
+namespace miu::log {
 
 class observer {
   public:

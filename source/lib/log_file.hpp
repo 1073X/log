@@ -4,8 +4,6 @@
 #include <filesystem>
 #include <fstream>
 
-#include "log/line.hpp"
-
 #include "observer.hpp"
 
 namespace miu::log {

@@ -70,4 +70,3 @@ TEST_F(ut_backend, dump) {
 
     miu::log::thread_id::reset();
 }
-
