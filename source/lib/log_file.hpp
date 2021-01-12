@@ -25,13 +25,7 @@ class log_file : public observer {
   public:
     log_file(std::string_view path, std::string_view name, com::date date)
         : _pathname(make_pathname(path, name, date))
-        , _ss(_pathname, std::ios_base::out | std::ios_base::app) {
-        line l { com::datetime::now(), severity::INFO };
-        l.set_thread_id(0);
-        l.append(+"---------------- started ----------------");
-        l.set_is_intact(true);
-        write(l);
-    }
+        , _ss(_pathname, std::ios_base::out | std::ios_base::app) {}
 
     auto pathname() const { return _pathname; }
 

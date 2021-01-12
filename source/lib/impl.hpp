@@ -2,6 +2,7 @@
 #include <memory>    // unique_ptr
 
 #include "log/frontend.hpp"
+#include "log/log.hpp"
 
 #include "backend.hpp"
 #include "log_term.hpp"
@@ -25,6 +26,8 @@ class impl {
         _rings.resize(cap);
         _frontend.set_severity(sev);
         _ob.reset(new T { std::forward<ARGS>(args)... });
+
+        info(+"---------------- started ----------------");
     }
 
     void dump() { _backend.dump(_ob.get()); }
