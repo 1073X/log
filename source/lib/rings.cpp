@@ -14,6 +14,15 @@ rings::~rings() {
     }
 }
 
+void
+rings::resize(uint32_t cap) {
+    for (auto ring : _vec) {
+        if (ring) {
+            ring->resize(cap);
+        }
+    }
+}
+
 ring*
 rings::get() {
     auto id = thread_id::get();

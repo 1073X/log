@@ -12,7 +12,7 @@ using miu::log::severity;
 struct ut_backend : public testing::Test {
     struct mock : public miu::log::observer {
         MOCK_METHOD(void, write, (line const&));
-    };
+    } ob;
 
     miu::log::rings rings { 512 };
     miu::log::backend backend { &rings };
@@ -34,11 +34,6 @@ TEST_F(ut_backend, dump) {
         std::mutex mtx;
         std::condition_variable val;
     } cv1, cv2;
-
-    mock ob1;
-    mock ob2;
-    backend.watch(&ob1);
-    backend.watch(&ob2);
 
     rings.get()->push(severity::ERROR, 1);
 
@@ -62,14 +57,13 @@ TEST_F(ut_backend, dump) {
 
     {
         testing::InSequence seq;
-        EXPECT_CALL(ob1, write(CheckLine(0U, severity::ERROR)));
-        EXPECT_CALL(ob1, write(CheckLine(1U, severity::WARN)));
-        EXPECT_CALL(ob1, write(CheckLine(2U, severity::INFO)));
-        EXPECT_CALL(ob1, write(CheckLine(0U, severity::DEBUG)));
+        EXPECT_CALL(ob, write(CheckLine(0U, severity::ERROR)));
+        EXPECT_CALL(ob, write(CheckLine(1U, severity::WARN)));
+        EXPECT_CALL(ob, write(CheckLine(2U, severity::INFO)));
+        EXPECT_CALL(ob, write(CheckLine(0U, severity::DEBUG)));
     }
 
-    EXPECT_CALL(ob2, write(testing::_)).Times(4);
-    backend.dump();
+    backend.dump(&ob);
 
     cv1.notify();
     cv2.notify();
@@ -77,10 +71,3 @@ TEST_F(ut_backend, dump) {
     miu::log::thread_id::reset();
 }
 
-TEST_F(ut_backend, no_observer) {
-    rings.get()->push(severity::DEBUG, +"debug");
-    rings.get()->push(severity::ERROR, +"error");
-    backend.dump();
-
-    miu::log::thread_id::reset();
-}

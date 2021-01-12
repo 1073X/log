@@ -9,11 +9,9 @@ class backend {
   public:
     backend(rings*);
 
-    void watch(observer*);
-    void dump();
+    void dump(observer*);
 
   private:
-    std::vector<observer*> _obs;
     rings* _rings;
 };
 

@@ -2,18 +2,32 @@
 
 #include <iostream>
 
+#include "log/line.hpp"
 #include "log/log.hpp"
+#include "source/lib/impl.hpp"
+#include "source/lib/observer.hpp"
 #include "source/lib/thread_id.hpp"
 
-TEST(ut_log, log) {
-    auto log = miu::log::log::instance();
+using miu::log::severity;
 
-    log->set_severity(miu::log::severity::DEBUG);
+TEST(ut_log, terminal) {
+    miu::log::log::instance()->reset(severity::DEBUG, 1024);
     miu::log::debug(1, 2, 3);
     miu::log::info(1, 2, 3);
     miu::log::warn(1, 2, 3);
     miu::log::error(1, 2, 3);
-    log->dump();
+    miu::log::log::instance()->dump();
+
+    miu::log::thread_id::reset();
+}
+
+TEST(ut_log, file) {
+    miu::log::log::instance()->reset(severity::DEBUG, 1024, "./", "ut_log");
+    miu::log::debug(1, 2, 3);
+    miu::log::info(1, 2, 3);
+    miu::log::warn(1, 2, 3);
+    miu::log::error(1, 2, 3);
+    miu::log::log::instance()->dump();
 
     miu::log::thread_id::reset();
 }

@@ -14,6 +14,8 @@ class ring {
   public:
     explicit ring(uint32_t capacity);
 
+    auto resize(uint32_t cap) { _raw.resize(cap); }
+
     auto capacity() const { return _raw.capacity(); }
     auto size() const { return _raw.size(); }
 
