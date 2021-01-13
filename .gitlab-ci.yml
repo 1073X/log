@@ -9,14 +9,14 @@ debug:
     script:
         - ./build debug
     except:
-        - master
+        - master 
 
 release:
     stage: release
     script:
         - ./build release
     except:
-        - master
+        - master 
 
 delivery:
     stage: deliver
@@ -30,9 +30,9 @@ delivery:
         - ./build debug
         - ./build release
 
-          #- mkdir -p $INC_PATH
-          #- rm -fr $INC_PATH/log
-          #- cp -frv ./include/log $INC_PATH
+        - mkdir -p $INC_PATH
+        - rm -fr $INC_PATH/log
+        - cp -frv ./include/log $INC_PATH
 
         - mkdir -p $DBG_PATH
         - cp -fv debug/liblog.a $DBG_PATH
@@ -43,11 +43,11 @@ delivery:
         - mkdir -p $UT_PATH
         - cp -fv release/ut_log $UT_PATH
     only:
-        - master
+        - master 
 
-downstream-project:
+cfg:
     stage: trigger
     script:
-        - echo "curl -X POST -F token=<downstream-project-token> -F ref=master <url>/api/v4/projects/<downstream-project-id>/trigger/pipeline"
+        - curl -X POST -F token=cbac0f405c70de287c801e2a75132d -F ref=master $GITLAB_URL/api/v4/projects/10/trigger/pipeline
     only:
-        - master
+        - master 
