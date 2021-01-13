@@ -9,14 +9,14 @@ debug:
     script:
         - ./build debug
     except:
-        - delivery-headers 
+        - master 
 
 release:
     stage: release
     script:
         - ./build release
     except:
-        - delivery-headers 
+        - master 
 
 delivery:
     stage: deliver
@@ -43,11 +43,11 @@ delivery:
         - mkdir -p $UT_PATH
         - cp -fv release/ut_log $UT_PATH
     only:
-        - delivery-headers 
+        - master 
 
-downstream-project:
+cfg:
     stage: trigger
     script:
         - curl -X POST -F token=cbac0f405c70de287c801e2a75132d -F ref=master $GITLAB_URL/api/v4/projects/10/trigger/pipeline
     only:
-        - delivery-headers 
+        - master 
