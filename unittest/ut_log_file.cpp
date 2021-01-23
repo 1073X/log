@@ -16,7 +16,7 @@ struct ut_log_file : public testing::Test {
 };
 
 TEST_F(ut_log_file, init_file) {
-    auto pathname = "./log_file/ut_log_file_" + std::to_string(log_date) + ".log";
+    auto pathname = "./log_file/ut_log_file_" + miu::com::to_string(log_date) + ".log";
     EXPECT_EQ(pathname, file.pathname());
 
     EXPECT_TRUE(std::filesystem::exists(pathname));

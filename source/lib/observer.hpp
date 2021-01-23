@@ -6,7 +6,7 @@ namespace miu::log {
 
 class observer {
   public:
-    virtual ~observer() = default;
+    virtual ~observer()             = default;
     virtual void write(line const&) = 0;
 };
 

@@ -6,15 +6,14 @@
 namespace miu::log {
 
 frontend::frontend(rings* rings)
-    : _rings(rings) {}
+    : _rings(rings) {
+}
 
-void
-frontend::set_severity(severity sev) {
+void frontend::set_severity(severity sev) {
     _sev = sev;
 }
 
-ring*
-frontend::get() {
+ring* frontend::get() {
     return _rings->get();
 }
 
