@@ -25,26 +25,22 @@ class log final {
 };
 
 template<typename... ARGS>
-inline void
-debug(ARGS&&... args) {
+inline void debug(ARGS&&... args) {
     log::instance()->front()->print(severity::DEBUG, std::forward<ARGS>(args)...);
 }
 
 template<typename... ARGS>
-inline void
-info(ARGS&&... args) {
+inline void info(ARGS&&... args) {
     log::instance()->front()->print(severity::INFO, std::forward<ARGS>(args)...);
 }
 
 template<typename... ARGS>
-inline void
-warn(ARGS&&... args) {
+inline void warn(ARGS&&... args) {
     log::instance()->front()->print(severity::WARN, std::forward<ARGS>(args)...);
 }
 
 template<typename... ARGS>
-inline void
-error(ARGS&&... args) {
+inline void error(ARGS&&... args) {
     log::instance()->front()->print(severity::ERROR, std::forward<ARGS>(args)...);
 }
 

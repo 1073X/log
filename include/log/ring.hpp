@@ -21,9 +21,8 @@ class ring {
 
     template<typename... ARGS>
     auto push(severity sev, ARGS&&... args) {
-        auto h = head { sev };
         auto size = _raw.capacity() - _raw.size();
-        push(size, h, std::forward<ARGS>(args)...);
+        push(size, head { sev }, std::forward<ARGS>(args)...);
     }
 
     line pop();

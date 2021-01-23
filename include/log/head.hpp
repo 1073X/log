@@ -24,9 +24,7 @@ class head {
 
 namespace miu::com {
 template<>
-struct strcat::cast<log::head> {
-    std::string operator()(log::head const&);
-};
-}    // namespace miu::com
+std::string to_string<log::head>(log::head const&);
+}
 
 DEF_VARIANT(miu::log::head, CUSTOM_TYPE_ID + 1);

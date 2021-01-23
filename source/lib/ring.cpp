@@ -4,10 +4,10 @@
 namespace miu::log {
 
 ring::ring(uint32_t capacity)
-    : _raw { capacity } {}
+    : _raw { capacity } {
+}
 
-line
-ring::pop() {
+line ring::pop() {
     auto constexpr head_id = com::type_id<head>::value;
     auto constexpr tail_id = com::type_id<tail>::value;
 
@@ -42,8 +42,7 @@ ring::pop() {
     return line {};
 }
 
-void
-ring::push(uint32_t size) {
+void ring::push(uint32_t size) {
     assert(_raw.capacity() - _raw.size() > 0 && "no more space");
     _raw.push(tail { size > 0 });
 }

@@ -13,7 +13,7 @@ class log_file : public observer {
     static auto make_pathname(std::string_view path, std::string_view name, com::date date) {
         char filename[128];
         std::snprintf(
-            filename, sizeof(filename), "%s_%s.log", name.data(), std::to_string(date).c_str());
+            filename, sizeof(filename), "%s_%s.log", name.data(), com::to_string(date).c_str());
 
         auto pathname = std::filesystem::path { path };
         std::filesystem::create_directories(pathname);
@@ -27,7 +27,7 @@ class log_file : public observer {
 
     auto pathname() const { return _pathname; }
 
-    void write(line const& l) override { _ss << std::to_string(l) << std::endl; }
+    void write(line const& l) override { _ss << com::to_string(l) << std::endl; }
 
   private:
     std::filesystem::path _pathname;

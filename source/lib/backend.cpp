@@ -9,10 +9,10 @@
 namespace miu::log {
 
 backend::backend(rings* rings)
-    : _rings { rings } {}
+    : _rings { rings } {
+}
 
-void
-backend::dump(observer* ob) {
+void backend::dump(observer* ob) {
     std::list<line> lines;
 
     // thread_id is supposed to increase in ascending order

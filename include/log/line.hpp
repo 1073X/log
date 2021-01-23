@@ -40,6 +40,7 @@ class line {
 
 }    // namespace miu::log
 
-namespace std {
-std::string to_string(miu::log::line const&);
+namespace miu::com {
+template<>
+std::string to_string<log::line>(log::line const&);
 }
