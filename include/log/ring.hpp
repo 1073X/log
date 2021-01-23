@@ -3,6 +3,7 @@
 #include <com/predict.hpp>
 #include <com/ring_buffer.hpp>
 #include <com/system_warn.hpp>
+#include <com/to_string.hpp>
 
 #include "head.hpp"
 #include "line.hpp"

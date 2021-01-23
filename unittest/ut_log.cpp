@@ -12,7 +12,7 @@ using miu::log::severity;
 
 TEST(ut_log, terminal) {
     miu::log::log::instance()->reset(severity::DEBUG, 1024);
-    miu::log::debug(1, 2, 3);
+    miu::log::debug(1, 2, std::string_view("abc"));
     miu::log::info(1, 2, 3);
     miu::log::warn(1, 2, 3);
     miu::log::error(1, 2, 3);
