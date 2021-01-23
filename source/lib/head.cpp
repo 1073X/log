@@ -38,13 +38,10 @@ std::optional<head> variant::get<head>() const {
 
 }    // namespace miu::com
 
-namespace miu::com {
-template<>
-std::string to_string<log::head>(log::head const& v) {
+DEF_TO_STRING(miu::log::head) {
     auto sev = std::to_string(v.severity());
 
     std::ostringstream ss;
     ss << '[' << to_string(v.time()) << ' ' << sev[0] << ']';
     return ss.str();
 }
-}    // namespace miu::com
