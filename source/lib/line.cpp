@@ -3,10 +3,7 @@
 
 #include <sstream>
 
-namespace miu::com {
-
-template<>
-std::string to_string<log::line>(log::line const& v) {
+DEF_TO_STRING(miu::log::line) {
     std::ostringstream ss;
 
     auto time      = v.time().time();
@@ -66,4 +63,3 @@ std::string to_string<log::line>(log::line const& v) {
     return ss.str();
 }
 
-}    // namespace miu::com

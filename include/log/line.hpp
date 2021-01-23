@@ -1,4 +1,6 @@
 #pragma once
+
+#include <com/to_string.hpp>
 #include <com/variant.hpp>
 #include <vector>
 
@@ -40,7 +42,4 @@ class line {
 
 }    // namespace miu::log
 
-namespace miu::com {
-template<>
-std::string to_string<log::line>(log::line const&);
-}
+DEF_TO_STRING(miu::log::line);
