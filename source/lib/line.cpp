@@ -8,7 +8,7 @@ DEF_TO_STRING(miu::log::line) {
 
     auto time      = v.time().time();
     auto thread_id = v.thread_id();
-    auto sev       = std::to_string(v.severity())[0];
+    auto sev       = enum_to_str(v.severity())[0];
     ss << "[" << to_string(time) << ' ' << thread_id << ' ' << sev << "] ";
     for (auto const& var : v) {
         switch (var.id()) {

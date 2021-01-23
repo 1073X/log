@@ -39,9 +39,7 @@ std::optional<head> variant::get<head>() const {
 }    // namespace miu::com
 
 DEF_TO_STRING(miu::log::head) {
-    auto sev = std::to_string(v.severity());
-
     std::ostringstream ss;
-    ss << '[' << to_string(v.time()) << ' ' << sev[0] << ']';
+    ss << '[' << to_string(v.time()) << ' ' << enum_to_str(v.severity())[0] << ']';
     return ss.str();
 }
