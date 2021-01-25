@@ -31,6 +31,7 @@ class ring {
   private:
     uint32_t push_variant(uint32_t, com::variant const&);
     uint32_t push_strcat(uint32_t, com::strcat const&);
+    uint32_t push_string(uint32_t, std::string const&);
 
     void push(uint32_t size);
 
@@ -47,6 +48,12 @@ class ring {
     template<typename... ARGS>
     void push(uint32_t size, com::strcat const& val, ARGS&&... args) {
         size = push_strcat(size, val);
+        push(size, std::forward<ARGS>(args)...);
+    }
+
+    template<typename... ARGS>
+    void push(uint32_t size, std::string const& val, ARGS&&... args) {
+        size = push_string(size, val);
         push(size, std::forward<ARGS>(args)...);
     }
 
