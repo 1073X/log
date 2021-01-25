@@ -2,8 +2,8 @@
 
 #include <com/predict.hpp>
 #include <com/ring_buffer.hpp>
+#include <com/strcat.hpp>
 #include <com/system_warn.hpp>
-#include <com/to_string.hpp>
 
 #include "head.hpp"
 #include "line.hpp"
@@ -29,19 +29,25 @@ class ring {
     line pop();
 
   private:
+    uint32_t push_variant(uint32_t, com::variant const&);
+    uint32_t push_strcat(uint32_t, com::strcat const&);
+
     void push(uint32_t size);
 
     template<typename T, typename... ARGS>
     void push(uint32_t size, T const& val, ARGS&&... args) {
-        if (LIKELY(size > 1)) {
-            _raw.push(val);
-            push(--size, std::forward<ARGS>(args)...);
+        size = push_variant(size, val);
+        if (LIKELY(size)) {
+            push(size, std::forward<ARGS>(args)...);
         } else {
-            if (size == 1) {
-                push(0);
-            }
             SYSTEM_WARN("LOG_OVERFLOW -", val, std::forward<ARGS>(args)...);
         }
+    }
+
+    template<typename... ARGS>
+    void push(uint32_t size, com::strcat const& val, ARGS&&... args) {
+        size = push_strcat(size, val);
+        push(size, std::forward<ARGS>(args)...);
     }
 
   private:

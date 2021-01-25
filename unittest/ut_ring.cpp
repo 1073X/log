@@ -70,6 +70,36 @@ TEST_F(ut_ring, overflow) {
     EXPECT_FALSE(ring.pop());
 }
 
+TEST_F(ut_ring, strcat) {
+    miu::com::strcat strcat { 1, 2, 3 };
+    ring.push(severity::DEBUG, 0, strcat, 4, strcat);
+
+    auto line1 = ring.pop();
+    ASSERT_TRUE(line1);
+    EXPECT_TRUE(line1.is_intact());
+    auto it1 = line1.begin();
+    EXPECT_EQ(0, (it1++)->get<int32_t>());
+    EXPECT_EQ("1", (it1++)->get<std::string>());
+    EXPECT_EQ("2", (it1++)->get<std::string>());
+    EXPECT_EQ("3", (it1++)->get<std::string>());
+    EXPECT_EQ(4, (it1++)->get<int32_t>());
+    EXPECT_EQ("1", (it1++)->get<std::string>());
+    EXPECT_EQ("2", (it1++)->get<std::string>());
+    EXPECT_EQ("3", (it1++)->get<std::string>());
+    EXPECT_EQ(line1.end(), it1);
+}
+
+TEST_F(ut_ring, strcat_overflow) {
+    miu::com::strcat strcat { 0, 1, 2, 3, 4, 5 };
+    ring.push(severity::DEBUG, strcat);
+    ring.push(severity::DEBUG, strcat);
+    ring.push(severity::DEBUG, strcat);
+    ring.push(severity::DEBUG, strcat, +"overflow");
+
+    // system warn;
+    ring.push(severity::DEBUG, strcat);
+}
+
 TEST_F(ut_ring, resize) {
     ring.resize(128);
     EXPECT_EQ(128U, ring.capacity());

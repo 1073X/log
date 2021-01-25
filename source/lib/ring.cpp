@@ -47,4 +47,25 @@ void ring::push(uint32_t size) {
     _raw.push(tail { size > 0 });
 }
 
+uint32_t ring::push_variant(uint32_t size, com::variant const& var) {
+    if (UNLIKELY(size <= 1)) {
+        if (size == 1) {
+            push(0);
+        }
+        size = 0;
+    } else {
+        _raw.push(var);
+        size--;
+    }
+    return size;
+}
+
+uint32_t ring::push_strcat(uint32_t size, com::strcat const& val) {
+    auto real = std::min(size - 1, (uint32_t)val.size());
+    for (auto i = 0U; i < real; i++) {
+        _raw.push(val[i]);
+    }
+    return size - real;
+}
+
 }    // namespace miu::log
