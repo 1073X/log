@@ -100,6 +100,18 @@ TEST_F(ut_ring, strcat_overflow) {
     ring.push(severity::DEBUG, strcat);
 }
 
+TEST_F(ut_ring, long_string) {
+    ring.push(severity::DEBUG, std::string("0123456789abcdef"));
+
+    auto line1 = ring.pop();
+    ASSERT_TRUE(line1);
+    EXPECT_TRUE(line1.is_intact());
+    auto it1 = line1.begin();
+    EXPECT_EQ("0123456789abcde", (it1++)->get<std::string>());
+    EXPECT_EQ("f", (it1++)->get<std::string>());
+    EXPECT_EQ(line1.end(), it1);
+}
+
 TEST_F(ut_ring, resize) {
     ring.resize(128);
     EXPECT_EQ(128U, ring.capacity());

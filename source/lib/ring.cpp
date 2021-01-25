@@ -61,11 +61,22 @@ uint32_t ring::push_variant(uint32_t size, com::variant const& var) {
 }
 
 uint32_t ring::push_strcat(uint32_t size, com::strcat const& val) {
-    auto real = std::min(size - 1, (uint32_t)val.size());
-    for (auto i = 0U; i < real; i++) {
-        _raw.push(val[i]);
+    auto it = val.begin();
+    while (it != val.end() && size > 1) {
+        size = push_string(size, *it++);
     }
-    return size - real;
+    return size;
+}
+
+uint32_t ring::push_string(uint32_t size, std::string const& val) {
+    auto it = val.begin();
+    while (it != val.end() && size > 1) {
+        auto len = std::min(15U, (uint32_t)std::distance(it, val.end()));
+        _raw.push(std::string { it, it + len });
+        size--;
+        it += len;
+    }
+    return size;
 }
 
 }    // namespace miu::log
