@@ -1,9 +1,9 @@
 #pragma once
-
 #include <com/predict.hpp>
 #include <com/ring_buffer.hpp>
 #include <com/strcat.hpp>
 #include <com/system_warn.hpp>
+#include <vector>
 
 #include "head.hpp"
 #include "line.hpp"
@@ -55,6 +55,15 @@ class ring {
     void push(uint32_t size, std::string const& val, ARGS&&... args) {
         size = push_string(size, val);
         push(size, std::forward<ARGS>(args)...);
+    }
+
+    template<typename T, typename ALLOCATOR, typename... ARGS>
+    void push(uint32_t size, std::vector<T, ALLOCATOR> const& val, ARGS&&... args) {
+        size = push_variant(size, +"VEC[");
+        for (auto i = 0U; i < val.size() && size; i++) {
+            size = push_variant(size, val[i]);
+        }
+        push(size, +"]", std::forward<ARGS>(args)...);
     }
 
   private:

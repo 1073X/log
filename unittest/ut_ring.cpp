@@ -100,6 +100,38 @@ TEST_F(ut_ring, strcat_overflow) {
     ring.push(severity::DEBUG, strcat);
 }
 
+TEST_F(ut_ring, vector) {
+    std::vector<int32_t> vec { 1, 2, 3 };
+    ring.push(severity::DEBUG, +"abc", vec, 1.2, vec, 1);
+
+    auto line1 = ring.pop();
+    ASSERT_TRUE(line1);
+    auto it1 = line1.begin();
+    EXPECT_EQ("abc", (it1++)->get<const char*>());
+    EXPECT_EQ("VEC[", (it1++)->get<const char*>());
+    EXPECT_EQ(1, (it1++)->get<int32_t>());
+    EXPECT_EQ(2, (it1++)->get<int32_t>());
+    EXPECT_EQ(3, (it1++)->get<int32_t>());
+    EXPECT_EQ("]", (it1++)->get<const char*>());
+    EXPECT_EQ(1.2, (it1++)->get<double>());
+    EXPECT_EQ("VEC[", (it1++)->get<const char*>());
+    EXPECT_EQ(1, (it1++)->get<int32_t>());
+    EXPECT_EQ(2, (it1++)->get<int32_t>());
+    EXPECT_EQ(3, (it1++)->get<int32_t>());
+    EXPECT_EQ("]", (it1++)->get<const char*>());
+    EXPECT_EQ(1, (it1++)->get<int32_t>());
+    EXPECT_EQ(line1.end(), it1);
+}
+
+TEST_F(ut_ring, vector_overflow) {
+    std::vector vec(32, 1);
+    ring.push(severity::INFO, vec);
+
+    auto line1 = ring.pop();
+    ASSERT_TRUE(line1);
+    EXPECT_FALSE(line1.is_intact());
+}
+
 TEST_F(ut_ring, long_string) {
     ring.push(severity::DEBUG, std::string("0123456789abcdef"));
 
