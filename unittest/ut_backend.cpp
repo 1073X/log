@@ -41,7 +41,7 @@ TEST_F(ut_backend, dump) {
         rings.get()->push(severity::WARN, 2);
         cv1.notify();
         cv1.wait();
-        miu::log::thread_id::reset();
+        miu::com::thread_id::reset();
     }).detach();
     cv1.wait();
 
@@ -49,7 +49,7 @@ TEST_F(ut_backend, dump) {
         rings.get()->push(severity::INFO, 3);
         cv2.notify();
         cv2.wait();
-        miu::log::thread_id::reset();
+        miu::com::thread_id::reset();
     }).detach();
     cv2.wait();
 
@@ -68,5 +68,5 @@ TEST_F(ut_backend, dump) {
     cv1.notify();
     cv2.notify();
 
-    miu::log::thread_id::reset();
+    miu::com::thread_id::reset();
 }

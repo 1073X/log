@@ -7,7 +7,7 @@
 
 #include "source/lib/rings.hpp"
 
-using miu::log::thread_id;
+using miu::com::thread_id;
 
 struct ut_rings : public testing::Test {
     void TearDown() override { thread_id::reset(); }

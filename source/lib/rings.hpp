@@ -1,10 +1,9 @@
 #pragma once
 
 #include <array>
+#include <com/thread_id.hpp>
 
 #include "log/ring.hpp"
-
-#include "thread_id.hpp"
 
 namespace miu::log {
 
@@ -21,7 +20,7 @@ class rings {
     ring* get();
 
   private:
-    std::array<ring*, thread_id::max()> _vec;
+    std::array<ring*, com::thread_id::max()> _vec;
 };
 
 }    // namespace miu::log

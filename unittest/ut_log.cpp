@@ -6,7 +6,6 @@
 #include "log/log.hpp"
 #include "source/lib/impl.hpp"
 #include "source/lib/observer.hpp"
-#include "source/lib/thread_id.hpp"
 
 using miu::log::severity;
 
@@ -18,7 +17,7 @@ TEST(ut_log, terminal) {
     miu::log::error(1, 2, 3);
     miu::log::log::instance()->dump();
 
-    miu::log::thread_id::reset();
+    miu::com::thread_id::reset();
 }
 
 TEST(ut_log, file) {
@@ -29,7 +28,7 @@ TEST(ut_log, file) {
     miu::log::error(1, 2, 3);
     miu::log::log::instance()->dump();
 
-    miu::log::thread_id::reset();
+    miu::com::thread_id::reset();
 }
 
 TEST(ut_log, syslog) {
@@ -40,5 +39,5 @@ TEST(ut_log, syslog) {
     miu::log::error(1, 2, 3);
     miu::log::log::instance()->dump();
 
-    miu::log::thread_id::reset();
+    miu::com::thread_id::reset();
 }
