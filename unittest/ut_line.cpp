@@ -66,7 +66,7 @@ TEST(ut_line, to_string) {
     line.set_is_intact(true);
 
     EXPECT_EQ(
-        "[12:15:30.000123 1 D] true a 1 1.500000 2 abc def 1ms 1days 20210110 23:17:30.000000 "
+        "[12:15:30.000123 1 D] true a 1 1.500000 2 abc def 1us 1d 20210110 23:17:30.000000 "
         "20210110 23:17:30.000000 <255:UKN> ",
         miu::com::to_string(line));
 }

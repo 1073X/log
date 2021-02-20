@@ -39,10 +39,10 @@ DEF_TO_STRING(miu::log::line) {
             ss << var.get<std::string>().value() << ' ';
             break;
         case type_id<microseconds>::value:
-            ss << var.get<microseconds>().value().count() << "ms ";
+            ss << to_string(var.get<microseconds>().value()) << ' ';
             break;
         case type_id<days>::value:
-            ss << var.get<days>().value().count() << "days ";
+            ss << to_string(var.get<days>().value()) << ' ';
             break;
         case type_id<date>::value:
             ss << to_string(var.get<date>().value()) << ' ';
