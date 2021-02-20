@@ -5,7 +5,7 @@ namespace miu::log {
 
 rings::rings(uint32_t capacity)
     : _vec { nullptr } {
-    _vec[thread_id::get()] = new ring { capacity };
+    _vec[com::thread_id::get()] = new ring { capacity };
 }
 
 rings::~rings() {
@@ -23,7 +23,7 @@ void rings::resize(uint32_t cap) {
 }
 
 ring* rings::get() {
-    auto id = thread_id::get();
+    auto id = com::thread_id::get();
     if (UNLIKELY(_vec[id] == nullptr)) {
         uint32_t capacity = _vec[0]->capacity();
         _vec[id]          = new ring { capacity };
