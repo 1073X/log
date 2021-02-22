@@ -38,20 +38,20 @@ DEF_TO_STRING(miu::log::line) {
         case type_id<std::string>::value:
             ss << var.get<std::string>().value() << ' ';
             break;
-        case type_id<microseconds>::value:
-            ss << to_string(var.get<microseconds>().value()) << ' ';
+        case type_id<time::delta>::value:
+            ss << to_string(var.get<time::delta>().value()) << ' ';
             break;
-        case type_id<days>::value:
-            ss << to_string(var.get<days>().value()) << ' ';
+        case type_id<time::days>::value:
+            ss << to_string(var.get<time::days>().value()) << ' ';
             break;
-        case type_id<date>::value:
-            ss << to_string(var.get<date>().value()) << ' ';
+        case type_id<time::date>::value:
+            ss << to_string(var.get<time::date>().value()) << ' ';
             break;
-        case type_id<daytime>::value:
-            ss << to_string(var.get<daytime>().value()) << ' ';
+        case type_id<time::daytime>::value:
+            ss << to_string(var.get<time::daytime>().value()) << ' ';
             break;
-        case type_id<datetime>::value:
-            ss << to_string(var.get<datetime>().value()) << ' ';
+        case type_id<time::stamp>::value:
+            ss << to_string(var.get<time::stamp>().value()) << ' ';
             break;
         default:
             ss << '<' << (uint32_t)var.id() << ":UKN"

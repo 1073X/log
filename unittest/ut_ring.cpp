@@ -1,8 +1,9 @@
 #include <gtest/gtest.h>
 
+#include <time/time.hpp>
+
 #include "log/ring.hpp"
 
-using miu::com::datetime;
 using miu::log::severity;
 
 struct ut_ring : public testing::Test {
@@ -16,7 +17,7 @@ TEST_F(ut_ring, push_pop) {
     auto line1 = ring.pop();
     ASSERT_TRUE(line1);
     EXPECT_EQ(severity::INFO, line1.severity());
-    EXPECT_GE(datetime::now(), line1.time());
+    EXPECT_GE(miu::time::now(), line1.time());
     EXPECT_TRUE(line1.is_intact());
     auto it1 = line1.begin();
     EXPECT_EQ(1, (it1++)->get<int32_t>());
@@ -27,7 +28,7 @@ TEST_F(ut_ring, push_pop) {
     ASSERT_TRUE(line2);
     EXPECT_TRUE(line2.is_intact());
     EXPECT_EQ(severity::DEBUG, line2.severity());
-    EXPECT_GE(datetime::now(), line2.time());
+    EXPECT_GE(miu::time::now(), line2.time());
     EXPECT_EQ(3U, line2.size());
 
     EXPECT_FALSE(ring.pop());

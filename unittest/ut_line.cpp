@@ -11,7 +11,7 @@ TEST(ut_line, default) {
 }
 
 TEST(ut_line, construct) {
-    miu::com::datetime time { 2021, 1, 9, 12, 15, 30, 123 };
+    miu::time::stamp time { 2021, 1, 9, 12, 15, 30, 123 };
     miu::log::line line { time, severity::DEBUG };
     EXPECT_EQ(time, line.time());
     EXPECT_EQ(severity::DEBUG, line.severity());
@@ -47,7 +47,7 @@ TEST(ut_line, intact) {
 }
 
 TEST(ut_line, to_string) {
-    miu::com::datetime time { 2021, 1, 9, 12, 15, 30, 123 };
+    miu::time::stamp time { 2021, 1, 9, 12, 15, 30, 123 };
     miu::log::line line { time, severity::DEBUG };
     line.set_thread_id(1);
     line.append(true);
@@ -57,16 +57,16 @@ TEST(ut_line, to_string) {
     line.append((uint32_t)2);
     line.append(+"abc");
     line.append(std::string("def"));
-    line.append(miu::com::microseconds { 1 });
-    line.append(miu::com::days { 1 });
-    line.append(miu::com::date { 2021, 1, 10 });
-    line.append(miu::com::daytime { 23, 17, 30, 0 });
-    line.append(miu::com::datetime { 2021, 1, 10, 23, 17, 30, 0 });
+    line.append(miu::time::delta { 1 });
+    line.append(miu::time::days { 1 });
+    line.append(miu::time::date { 2021, 1, 10 });
+    line.append(miu::time::daytime { 23, 17, 30, 0 });
+    line.append(miu::time::stamp { 2021, 1, 10, 23, 17, 30, 0 });
     line.append(miu::com::variant());
     line.set_is_intact(true);
 
     EXPECT_EQ(
-        "[12:15:30.000123 1 D] true a 1 1.500000 2 abc def 1us 1d 20210110 23:17:30.000000 "
-        "20210110 23:17:30.000000 <255:UKN> ",
+        "[12:15:30.123 1 D] true a 1 1.500000 2 abc def 1ms 1d 20210110 23:17:30.000 "
+        "20210110 23:17:30.000 <255:UKN> ",
         miu::com::to_string(line));
 }

@@ -1,12 +1,12 @@
 #include <gtest/gtest.h>
 
-#include <com/datetime.hpp>
+#include <time/stamp.hpp>
 
 #include "log/line.hpp"
 #include "log/severity.hpp"
 #include "source/lib/log_file.hpp"
 
-using miu::com::date;
+using miu::time::date;
 
 struct ut_log_file : public testing::Test {
     void TearDown() override { std::filesystem::remove(file.pathname()); }

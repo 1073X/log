@@ -4,16 +4,17 @@
 #include <com/strcat.hpp>
 #include <com/variant.hpp>
 #include <sstream>
+#include <time/time.hpp>
 
 namespace miu::log {
 
-head::head(com::datetime time, enum severity sev)
+head::head(time::stamp time, enum severity sev)
     : _time(time)
     , _sev(sev) {
 }
 
 head::head(enum severity sev)
-    : head(com::datetime::now(), sev) {
+    : head(time::now(), sev) {
 }
 
 }    // namespace miu::log
@@ -25,13 +26,13 @@ using log::severity;
 
 template<>
 void variant::set<head>(head const& val) {
-    new (_value) com::datetime { val.time() };
+    new (_value) time::stamp { val.time() };
     *(severity*)(_value + 1) = val.severity();
 }
 
 template<>
 std::optional<head> variant::get<head>() const {
-    auto time = *(com::datetime const*)_value;
+    auto time = *(time::stamp const*)_value;
     auto sev  = *(log::severity const*)(_value + 1);
     return std::make_optional<head>(time, sev);
 }
