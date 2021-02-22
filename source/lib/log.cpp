@@ -1,6 +1,8 @@
 
 #include "log/log.hpp"
 
+#include <time/time.hpp>
+
 #include "impl.hpp"
 #include "log_file.hpp"
 #include "log_syslog.hpp"
@@ -25,7 +27,7 @@ void log::reset(severity sev, uint32_t cap) {
 }
 
 void log::reset(severity sev, uint32_t cap, std::string_view path, std::string_view name) {
-    _impl->reset<log_file>(sev, cap, path, name, com::date::today());
+    _impl->reset<log_file>(sev, cap, path, name, time::today());
 }
 
 void log::reset(severity sev, uint32_t cap, std::string_view name) {

@@ -6,6 +6,7 @@
 
 #include "source/lib/backend.hpp"
 
+using namespace std::chrono_literals;
 using miu::log::line;
 using miu::log::severity;
 
@@ -36,6 +37,7 @@ TEST_F(ut_backend, dump) {
     } cv1, cv2;
 
     rings.get()->push(severity::ERROR, 1);
+    std::this_thread::sleep_for(1ms);
 
     std::thread([&]() {
         rings.get()->push(severity::WARN, 2);
@@ -44,6 +46,7 @@ TEST_F(ut_backend, dump) {
         miu::com::thread_id::reset();
     }).detach();
     cv1.wait();
+    std::this_thread::sleep_for(1ms);
 
     std::thread([&]() {
         rings.get()->push(severity::INFO, 3);
@@ -52,6 +55,7 @@ TEST_F(ut_backend, dump) {
         miu::com::thread_id::reset();
     }).detach();
     cv2.wait();
+    std::this_thread::sleep_for(1ms);
 
     rings.get()->push(severity::DEBUG, 4);
 

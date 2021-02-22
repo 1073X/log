@@ -1,14 +1,16 @@
 #include <gtest/gtest.h>
 
+#include <time/time.hpp>
+
 #include "log/head.hpp"
 
-using miu::com::datetime;
 using miu::log::severity;
+using miu::time::stamp;
 
 TEST(ut_head, ctor) {
     miu::log::head head { severity::DEBUG };
     EXPECT_EQ(severity::DEBUG, head.severity());
-    EXPECT_GE(datetime::now(), head.time());
+    EXPECT_GE(miu::time::now(), head.time());
 }
 
 TEST(ut_head, variant) {

@@ -2,6 +2,7 @@
 
 #include <com/to_string.hpp>
 #include <com/variant.hpp>
+#include <time/stamp.hpp>
 #include <vector>
 
 #include "severity.hpp"
@@ -11,7 +12,7 @@ namespace miu::log {
 class line {
   public:
     line() = default;
-    line(com::datetime time, severity sev)
+    line(time::stamp time, severity sev)
         : _time(time)
         , _sev(sev) {}
 
@@ -33,7 +34,7 @@ class line {
     auto set_is_intact(bool v) { _is_intact = v; }
 
   private:
-    com::datetime _time;
+    time::stamp _time;
     enum severity _sev { severity::MAX };
     uint32_t _thread_id { -1U };
     std::vector<com::variant> _vec;
