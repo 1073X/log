@@ -11,10 +11,13 @@ class frontend {
   public:
     frontend(rings*);
 
-    void set_severity(severity);
+    auto severity() const { return _sev; }
+    void set_severity(enum severity);
+
+    uint32_t capacity() const;
 
     template<typename... ARGS>
-    auto print(severity sev, ARGS&&... args) {
+    auto print(enum severity sev, ARGS&&... args) {
         if (sev >= _sev) {
             get()->push(sev, std::forward<ARGS>(args)...);
         }
@@ -24,7 +27,7 @@ class frontend {
     ring* get();
 
   private:
-    severity _sev { severity::MAX };
+    enum severity _sev { severity::MAX };
     rings* _rings;
 };
 

@@ -12,6 +12,9 @@ using miu::log::severity;
 
 struct ut_backend : public testing::Test {
     struct mock : public miu::log::observer {
+        mock()
+            : miu::log::observer("mock") {}
+
         MOCK_METHOD(void, write, (line const&));
     } ob;
 
