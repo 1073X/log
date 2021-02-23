@@ -22,7 +22,8 @@ class log_file : public observer {
 
   public:
     log_file(std::string_view path, std::string_view name, time::date date)
-        : _pathname(make_pathname(path, name, date))
+        : observer("file")
+        , _pathname(make_pathname(path, name, date))
         , _ss(_pathname, std::ios_base::out | std::ios_base::app) {}
 
     auto pathname() const { return _pathname; }

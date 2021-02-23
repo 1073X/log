@@ -9,37 +9,38 @@
 
 namespace miu::log {
 
-log* log::instance() {
-    static log instance {};
-    return &instance;
+static std::unique_ptr<impl> g_impl { new impl() };
+
+std::string type() {
+    return g_impl->type();
 }
 
-log::log()
-    : _impl { new class impl() } {
+enum severity severity() {
+    return g_impl->severity();
 }
 
-log::~log() {
-    delete _impl;
+uint32_t capacity() {
+    return g_impl->capacity();
 }
 
-void log::reset(severity sev, uint32_t cap) {
-    _impl->reset<log_term>(sev, cap);
+frontend* front() {
+    return g_impl->front();
 }
 
-void log::reset(severity sev, uint32_t cap, std::string_view path, std::string_view name) {
-    _impl->reset<log_file>(sev, cap, path, name, time::today());
+void reset(enum severity sev, uint32_t cap) {
+    g_impl->reset<log_term>(sev, cap);
 }
 
-void log::reset(severity sev, uint32_t cap, std::string_view name) {
-    _impl->reset<log_syslog>(sev, cap, name);
+void reset(enum severity sev, uint32_t cap, std::string_view path, std::string_view name) {
+    g_impl->reset<log_file>(sev, cap, path, name, time::today());
 }
 
-void log::dump() {
-    _impl->dump();
+void reset(enum severity sev, uint32_t cap, std::string_view name) {
+    g_impl->reset<log_syslog>(sev, cap, name);
 }
 
-frontend* log::front() {
-    return _impl->front();
+void dump() {
+    g_impl->dump();
 }
 
 }    // namespace miu::log

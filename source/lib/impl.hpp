@@ -18,10 +18,14 @@ class impl {
         , _backend { &_rings }
         , _ob { new log_term } {}
 
+    auto type() const { return _ob->type(); }
+    auto severity() const { return _frontend.severity(); }
+    auto capacity() const { return _frontend.capacity(); }
+
     auto front() { return &_frontend; }
 
     template<typename T, typename... ARGS>
-    void reset(severity sev, uint32_t cap, ARGS&&... args) {
+    void reset(enum severity sev, uint32_t cap, ARGS&&... args) {
         // TBD: not thread safe
         _rings.resize(cap);
         _frontend.set_severity(sev);
