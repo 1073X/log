@@ -1,5 +1,7 @@
 #pragma once
 
+#include <com/system_warn.hpp>
+
 #include "frontend.hpp"
 
 namespace miu::log {
@@ -26,11 +28,17 @@ inline void info(ARGS&&... args) {
 
 template<typename... ARGS>
 inline void warn(ARGS&&... args) {
+#ifndef NDEBUG
+    SYSTEM_WARN(std::forward<ARGS>(args)...);
+#endif
     front()->print(severity::WARN, std::forward<ARGS>(args)...);
 }
 
 template<typename... ARGS>
 inline void error(ARGS&&... args) {
+#ifndef NDEBUG
+    SYSTEM_WARN(std::forward<ARGS>(args)...);
+#endif
     front()->print(severity::ERROR, std::forward<ARGS>(args)...);
 }
 
